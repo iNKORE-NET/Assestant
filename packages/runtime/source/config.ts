@@ -1,9 +1,22 @@
 import type { ExportedAsset } from "./item";
+import type { ResolvableValue } from "./utilities";
 
 declare global
 {
     interface Window
     {
+        /**
+         * The global configuration for Assestant. Do not set this property directly.
+         * Please use `configureAssestant()` to set the configuration.
+         * @example
+         * ```typescript
+         * // DO NOT:
+         * ❎ window.assestantConfig = { ... };
+         * ❎ window.assestantConfig.packages = { ... };
+         * // DO:
+         * ✅ window.assestantConfig.packages["my-package"] = { ... };
+         * ```
+         */
         assestantConfig?: AssestantConfig;
     }
 }
@@ -17,7 +30,7 @@ declare global
  */
 export type AssetSource = "local" | "online" | "auto";
 
-export type AssestantConfig = 
+export type AssestantPackageConfig = 
 {
     /**
      * When fetching assets with online url, this is the base url to prepend to the relative path.
@@ -37,13 +50,61 @@ export type AssestantConfig =
     /**
      * The source to fetch assets from.
      * Pass a string to set the source for all assets, or a function that takes an asset and returns the source.
+     * You can also pass an object with package names as keys to set the source for specific packages.
      */
-    assetSource: AssetSource | ((asset: ExportedAsset) => AssetSource);
+    assetSource: ResolvableValue<AssetSource, [ExportedAsset]>;
+}
+
+export type AssestantConfig = 
+{
+    /**
+     * The configuration for each package, and use 'default' as the key for the default configuration.
+     * @example
+     * ```typescript
+     * // DO NOT:
+     * ❎ window.assestantConfig = { ... };
+     * ❎ window.assestantConfig.packages = { ... };
+     * // DO:
+     * ✅ window.assestantConfig.packages["my-package"] = { ... };
+     */
+    packages: Record<string, Partial<AssestantPackageConfig>> & { "default": AssestantPackageConfig };
+
+    /**
+     * When assetSource is set to "auto", we will check if the network is available and use this to determine if the asset should be fetched from online.
+     * You can use this property to override the network status.
+     */
+    isOnline: boolean | (() => boolean);
 }
 
 export const assestantConfig: AssestantConfig = 
 {
-    assetSource: "auto"
+    packages: { "default": { onlineUrl: undefined, assetSource: "auto" } },
+    isOnline: () => (navigator?.onLine ?? true)
 };
 
 window.assestantConfig = assestantConfig;
+
+export function configureAssestant(config: Partial<AssestantConfig>)
+{
+    for (const prop in config)
+    {
+        if (prop === "packages")
+        {
+            for (const packageName in config.packages)
+            {
+                if (packageName in assestantConfig.packages)
+                {
+                    Object.assign(assestantConfig.packages[packageName], config.packages[packageName]);
+                }
+                else
+                {
+                    assestantConfig.packages[packageName] = config.packages[packageName];
+                }
+            }
+        }
+        else
+        {
+            assestantConfig[prop] = config[prop];
+        }
+    }
+}

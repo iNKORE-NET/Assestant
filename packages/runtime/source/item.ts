@@ -1,14 +1,20 @@
 import { assestantConfig, type AssetSource } from "./config";
-import { removeSlash } from "./utilities";
+import { removeSlash, resolveValue } from "./utilities";
 
 export class ExportedAsset
 {
     private _srcLocal: string; // imported from the package
     private _srcRelative: string; // the relative path to the asset
+    private _relatedPackage: string; // the package that the asset is imported from
 
-    constructor(srcLocal?: string, srcOnline?: string)
+    private _length: number;
+
+    constructor(construction: ExportedAssetConstruction)
     {
-
+        this._srcLocal = construction.srcLocal;
+        this._srcRelative = construction.relativePath;
+        this._relatedPackage = construction.package;
+        this._length = construction.length;
     }
 
     /**
@@ -23,10 +29,21 @@ export class ExportedAsset
     get relativePath() { return this._srcRelative; }
 
     /**
+     * The package that the asset is imported from.
+     */
+    get package() { return this._relatedPackage; }
+
+    /**
      * The extension of the asset. Without the dot.
      * @example `png`, `jpg`, `svg`
      */
     get extension() { return this.relativePath.split(".").pop(); }
+
+    /**
+     * The length (file size) of the asset in bytes.
+     * This is determined when the package is bundled, if you manually changed the files in the package, or the online source has changed, this value may not be accurate.
+     */
+    get length() { return this._length; }
 
     /**
      * The full url to the asset when fetching from the local package.
@@ -34,10 +51,10 @@ export class ExportedAsset
      */
     get srcOnline() 
     { 
-        if (assestantConfig.onlineUrl == undefined) throw new Error("The onlineUrlBase must be set in the assestantConfig in order to fetch assets from online.");
-        if (typeof assestantConfig.onlineUrl === "function") return assestantConfig.onlineUrl(this);
+        if (this.packageConfig.onlineUrl == undefined) throw new Error("The onlineUrlBase must be set in the assestantConfig in order to fetch assets from online.");
+        if (typeof this.packageConfig.onlineUrl === "function") return this.packageConfig.onlineUrl(this);
 
-        return removeSlash(assestantConfig.onlineUrl.base, { trailing: true }) + "/" + removeSlash(this.relativePath ?? "", { leading: true });
+        return removeSlash(this.packageConfig.onlineUrl.base, { trailing: true }) + "/" + removeSlash(this.relativePath ?? "", { leading: true });
     }
 
     /**
@@ -46,17 +63,18 @@ export class ExportedAsset
      */
     get src() 
     { 
-        let method: AssetSource;
-        if (typeof assestantConfig.assetSource === "function") method = assestantConfig.assetSource(this);
-        else method = assestantConfig.assetSource;
+        let method: AssetSource = resolveValue(this.packageConfig.assetSource, [this]);
 
         switch (method)
         {
             case "local": return this.srcLocal;
             case "online": return this.srcOnline;
-            case "auto": return (navigator.onLine && assestantConfig.onlineUrl != undefined) ? this.srcOnline : this.srcLocal;
+            case "auto": return ((typeof assestantConfig.isOnline === "function" ? assestantConfig.isOnline() : assestantConfig.isOnline) && this.packageConfig.onlineUrl != undefined)
+                ? this.srcOnline : this.srcLocal;
         }
     }
+
+    protected get packageConfig() { return { ...assestantConfig.packages["default"], ...assestantConfig.packages[this.package] }; }
 
     /** Returns the `src` property. */
     public toString() { return this.src; }
@@ -64,4 +82,9 @@ export class ExportedAsset
     public valueOf() { return this.src; }
     /** Returns the `src` property. */
     public [Symbol.toPrimitive]() { return this.src; }
+}
+
+export type ExportedAssetConstruction = Pick<ExportedAsset, "srcLocal" | "relativePath" | "package" | "length"> &
+{
+
 }

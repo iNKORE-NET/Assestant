@@ -1,0 +1,36 @@
+{
+    // "references": [ { "path": "./tsconfig.build.json" } ],
+    "compilerOptions":
+    {
+        "baseUrl": ".",
+        "outDir": "./dist/",
+        "rootDir": "./source/",
+        "target": "esnext",
+        "lib":
+        [
+            "esnext", "DOM"
+        ],
+        "strict": true,
+        "noEmit": false,
+        "allowJs": true,
+        "module": "esnext",
+        "skipLibCheck": true,
+        "noImplicitAny": false,
+        "noImplicitThis": false,
+        "esModuleInterop": true,
+        "isolatedModules": true,
+        "strictNullChecks": true,
+        "resolveJsonModule": true,
+        "removeComments": false,
+        "moduleResolution": "bundler",
+        "noFallthroughCasesInSwitch": true,
+        "useUnknownInCatchVariables": false,
+        "allowSyntheticDefaultImports": true,
+        "forceConsistentCasingInFileNames": true,
+        "incremental": false,
+    },
+    "include":
+    [
+        "source/**/*",
+    ]
+}

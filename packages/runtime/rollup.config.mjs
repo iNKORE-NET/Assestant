@@ -1,0 +1,57 @@
+import path from "path";
+
+import typescript from "@rollup/plugin-typescript";
+
+import PreserveDirectivesPlugin from "@inkore/rollup-plugins/preserve-directives";
+import RelativeDtsImportsPlugin from "@inkore/rollup-plugins/relative-imports-dts";
+import PreserveCommentsPlugin from "@inkore/rollup-plugins/preserve-comments";
+
+const mode = process.env.MODE;
+const isProd = mode === "prod";
+const __dirname = path.resolve();
+
+/** @type {import("rollup").RollupOptions} */
+const config =
+{
+    input: ["source/index.ts", "source/internal/index.ts"],
+    output:
+    {
+        dir: "dist",
+        format: "esm",
+        sourcemap: true,
+        preserveModules: true,
+        preserveModulesRoot: "source",
+    },
+
+    plugins:
+    [
+        typescript
+        ({
+            tsconfig: "./tsconfig.json",
+            sourceMap: !isProd,
+            outputToFilesystem: true,
+            compilerOptions:
+            {
+                sourceMap: !isProd,
+                declaration: true,
+                declarationDir: "./dist",
+                declarationMap: false,
+                noEmit: false
+            },
+            removeComments: false,
+        }),
+
+        PreserveCommentsPlugin({ }),
+
+        RelativeDtsImportsPlugin
+        ({
+            rootDirectories:
+            [{
+                alias: ["source"],
+                path: "./dist/*"
+            }]
+        }),
+    ]
+}
+
+export default config;

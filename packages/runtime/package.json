@@ -1,12 +1,19 @@
 {
-  "name": "runtime",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC"
+    "name": "@assestant/runtime",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": 
+    {
+        "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",
+        "build": "rollup -c rollup.config.mjs --configPlugin typescript --environment MODE:prod"
+    },
+    "keywords": 
+    [
+    ],
+    "devDependencies": 
+    {
+    },
+    "author": "",
+    "license": "LGPL-3.0-or-later"
 }

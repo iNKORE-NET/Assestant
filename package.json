@@ -11,9 +11,27 @@
     "keywords": 
     [
     ],
+    "exports": 
+    {
+        "./internal": 
+        {
+            "types": "./dist/internal/index.d.ts",
+            "default": "./dist/internal/index.js"
+        },
+        ".": 
+        {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./*": 
+        {
+            "types": "./dist/*",
+            "default": "./dist/*"
+        }
+    },
     "devDependencies": 
     {
-        "@inkore/rollup-plugins": "^0.1.8",
+        "@inkore/rollup-plugins": "^0.3.1",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-typescript": "^12.1.2",
@@ -29,6 +47,7 @@
         "eslint-plugin-unused-imports": "^4.1.4",
         "rollup": "^4.21.0",
         "rollup-plugin-copy": "^3.5.0",
+        "rollup-plugin-node-externals": "^8.0.0",
         "rollup-plugin-progress": "^1.1.2",
         "tslib": "^2.6.3",
         "typescript": "^5.3.3"

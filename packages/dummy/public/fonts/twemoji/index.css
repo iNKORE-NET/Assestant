@@ -1,0 +1,8 @@
+@font-face 
+{
+    font-family: 'Twemoji';
+    font-weight: 200 300 400 500 600 700 800 900;
+    font-style: normal italic;
+
+    src: url("TwitterColorEmoji.woff2") format(woff2) tech(color-svg);
+}

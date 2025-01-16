@@ -3,6 +3,8 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  color-scheme: dark;
+  color: white;
 }
 
 .logo {
@@ -18,6 +20,10 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+.logo.inko:hover {
+  filter: drop-shadow(0 0 2em #2b8800);
+}
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
@@ -28,7 +34,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
+  a:nth-of-type(3) .logo {
     animation: logo-spin infinite 20s linear;
   }
 }
@@ -38,5 +44,5 @@
 }
 
 .read-the-docs {
-  color: #888;
+  color: #AAAAAA;
 }

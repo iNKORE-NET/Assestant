@@ -1,4 +1,5 @@
 import path from "path";
+import { glob } from "glob";
 
 import typescript from "@rollup/plugin-typescript";
 import nodeExternals from 'rollup-plugin-node-externals'
@@ -14,7 +15,7 @@ const __dirname = path.resolve();
 /** @type {import("rollup").RollupOptions} */
 const config =
 {
-    input: ["source/index.ts", "source/internal/index.ts"],
+    input: ["source/index.ts", ...glob.sync("source/bundlers/*")],
     output:
     {
         dir: "dist",

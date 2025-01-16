@@ -1,4 +1,4 @@
-import type { ExportedAsset } from "./item";
+import type { AssetItem } from "./item";
 import type { ResolvableValue } from "./utilities";
 
 declare global
@@ -44,7 +44,7 @@ export type AssestantPackageConfig =
      * // This is equivalent to the previous example, but allows for more complex logic.
      * ```
      */
-    onlineUrl?: { base: string } | ((asset: ExportedAsset) => string);
+    onlineUrl?: { base: string } | ((asset: AssetItem) => string);
 
 
     /**
@@ -52,7 +52,7 @@ export type AssestantPackageConfig =
      * Pass a string to set the source for all assets, or a function that takes an asset and returns the source.
      * You can also pass an object with package names as keys to set the source for specific packages.
      */
-    assetSource: ResolvableValue<AssetSource, [ExportedAsset]>;
+    assetSource: ResolvableValue<AssetSource, [AssetItem]>;
 }
 
 export type AssestantConfig = 

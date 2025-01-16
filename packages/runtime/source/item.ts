@@ -1,7 +1,7 @@
 import { assestantConfig, type AssetSource } from "./config";
 import { removeSlash, resolveValue } from "./utilities";
 
-export class ExportedAsset
+export class AssetItem
 {
     private _srcLocal: string; // imported from the package
     private _srcRelative: string; // the relative path to the asset
@@ -9,7 +9,7 @@ export class ExportedAsset
 
     private _length: number;
 
-    constructor(construction: ExportedAssetConstruction)
+    constructor(construction: AssetItemConstruction)
     {
         this._srcLocal = construction.srcLocal;
         this._srcRelative = construction.relativePath;
@@ -25,6 +25,7 @@ export class ExportedAsset
 
     /**
      * The relative path to the asset.
+     * The path is relative to the root of the public dir.
      */
     get relativePath() { return this._srcRelative; }
 
@@ -84,7 +85,7 @@ export class ExportedAsset
     public [Symbol.toPrimitive]() { return this.src; }
 }
 
-export type ExportedAssetConstruction = Pick<ExportedAsset, "srcLocal" | "relativePath" | "package" | "length"> &
+export type AssetItemConstruction = Pick<AssetItem, "srcLocal" | "relativePath" | "package" | "length"> &
 {
 
 }

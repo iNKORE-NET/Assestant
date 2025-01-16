@@ -2,11 +2,23 @@
     "name": "@assestant/runtime",
     "version": "1.0.0",
     "description": "",
-    "main": "index.js",
     "scripts": 
     {
         "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",
         "build": "rollup -c rollup.config.mjs --configPlugin typescript --environment MODE:prod"
+    },
+    "exports": 
+    {
+        ".": 
+        {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./internal": 
+        {
+            "types": "./dist/internal/index.d.ts",
+            "default": "./dist/internal/index.js"
+        }
     },
     "keywords": 
     [

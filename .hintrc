@@ -1,0 +1,17 @@
+{
+  "extends": [
+    "development"
+  ],
+  "hints": {
+    "meta-viewport": "off",
+    "compat-api/html": "off",
+    "typescript-config/strict": "off",
+    "typescript-config/consistent-casing": "off",
+    "no-inline-styles": "off",
+    "compat-api/css": "off",
+    "axe/text-alternatives": "off",
+    "axe/forms": "off",
+    "apple-touch-icons": "off",
+    "css-prefix-order": "off"
+  }
+}

@@ -1,6 +1,6 @@
-import { ExportedAsset, type ExportedAssetConstruction } from "../item";
+import { AssetItem, type AssetItemConstruction } from "../item";
 
-export class ImageAssets extends ExportedAsset
+export class ImageAssetItem extends AssetItem
 {
     private _width: number;
     private _height: number;
@@ -24,7 +24,7 @@ export class ImageAssets extends ExportedAsset
     get height() { return this._height; }
 }
 
-export type ImageAssetConstruction = ExportedAssetConstruction &
+export type ImageAssetConstruction = AssetItemConstruction &
 {
     width: number;
     height: number;

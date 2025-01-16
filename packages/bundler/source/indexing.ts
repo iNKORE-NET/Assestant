@@ -81,10 +81,10 @@ export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outp
             Please double-check the file you are trying to include. File: '" + srcFullPath + "'");
     }
 
-    function fName(ext: string)
-    {
-        return path.relative(outputDir, path.join(indexDirname, srcFileName + ext));
-    }
+    // function fName(ext: string)
+    // {
+    //     return path.relative(outputDir, path.join(indexDirname, srcFileName + ext));
+    // }
 
     switch (file)
     {

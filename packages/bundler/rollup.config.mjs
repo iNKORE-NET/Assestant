@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 /** @type {import("rollup").RollupOptions} */
 const config =
 {
-    input: ["source/index.ts", ...glob.sync("source/bundlers/*")],
+    input: ["source/index.ts", ...glob.sync("source/bundlers/*/index.ts")],
     output:
     {
         dir: "dist",
@@ -24,6 +24,7 @@ const config =
         preserveModules: true,
         preserveModulesRoot: "source",
     },
+    
 
     plugins:
     [
@@ -51,7 +52,7 @@ const config =
             rootDirectories:
             [{
                 alias: ["source"],
-                path: "./dist/*"
+                path: "./dist"
             }]
         }),
     ]

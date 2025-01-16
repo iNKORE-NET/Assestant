@@ -1,34 +1,40 @@
 {
     "name": "@assestant/bundler",
-    "private": true,
     "version": "1.0.0",
     "description": "",
     "type": "module",
-    "scripts": 
-    {
+    "scripts": {
         "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",
         "build": "rollup -c rollup.config.mjs --configPlugin typescript --environment MODE:prod"
     },
-    "keywords": 
-    [
-    ],
-    "dependencies": 
-    {
-        "sharp": "^0.33.5",
-        "glob": "^10.3.15"
+    "keywords": [],
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
+        },
+        "./*": {
+            "types": "./dist/bundlers/*/index.d.ts",
+            "default": "./dist/bundlers/*/index.js"
+        }
     },
-    "devDependencies": 
-    {
-        "@assestant/runtime": "workspace:^"
+    "dependencies": {
+        "glob": "^10.3.15",
+        "sharp": "^0.33.5"
     },
-    "peerDependencies": 
-    {
+    "devDependencies": {
+        "@assestant/runtime": "workspace:^",
+        "type-fest": "^4.32.0"
+    },
+    "peerDependencies": {
+        "@rollup/pluginutils": "^5.1.4",
         "rollup": "2.x || 3.x || 4.x"
     },
-    "peerDependenciesMeta": 
-    {
-        "rollup": 
-        {
+    "peerDependenciesMeta": {
+        "rollup": {
+            "optional": true
+        },
+        "@rollup/pluginutils": {
             "optional": true
         }
     },

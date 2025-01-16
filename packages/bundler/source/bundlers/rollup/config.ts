@@ -1,58 +1,65 @@
-import type { RollupOptions } from "rollup";
-import { glob } from "glob";
-import path from "path";
+import type { RollupOptions, Plugin as RollupPlugin } from "rollup";
 
-export type MakeConfigOptions =
+import type { AssestantPluginOptions } from "./plugin";
+import type { PartialPartial } from "source/utilities";
+
+import assestantPlugin from "./plugin";
+import { builtinFilters, listFilesByInclusion, type InclusionFilter } from "source/inclusion";
+
+export type MakeConfigOptions = AssestantPluginOptions &
 {
-    /**
-     * The relative path to the public root directory that you want to include in the bundle.
-     * @default "./public"
+    /** 
+     * Which files should be included in the bundle.
+     * You can use a list of filters to make things easier,
+     * or you can use a list of strings as the files to include.
+     * @default 
+     * [includesEverything, excludesInvalidAssets]
      */
-    publicRoot: string;
+    includes: InclusionFilter[] | string[];
 
-    /**
-     * The relative path to the output directory.
-     * @default "./dist"
-     */
-    outputDir: string;
-
-    /**
-     * Add TypeScript declaration files to the bundle. This requires you to have the `@rollup/plugin-typescript` plugin installed.
-     */
-    useTypeScript?: boolean;
-
-    external?: 
-    { 
-        /**
-         * The extensions of the files that you want to exclude from the bundle.
-         */
-        extensions: string[]; 
-    } | ((path: string) => boolean);
+    rollupOptions?: Omit<Partial<RollupOptions>, "plugins"> &
+    {
+        plugins?: RollupPlugin[];
+    }
 }
 
-export function makeConfig(ops: MakeConfigOptions): RollupOptions
-{
-    return {
-        input: glob.sync(path.join(ops.publicRoot, "**/*")).filter((f) => 
-        {
-            if (typeof ops.external === "function") return !ops.external(f);
-            else if (typeof ops.external === "object")
-            {
-                return !ops.external.extensions.some((ext) => f.endsWith(ext));
-            }
+export type MakeConfigOptionsInput = PartialPartial<MakeConfigOptions, "outputDir" | "publicRoot" | "useTypeScript" | "includes">;
 
-            return true;
-        }),
+export function assestantConfig(_ops: MakeConfigOptionsInput): RollupOptions
+{
+    const ops: MakeConfigOptions =
+    {
+        publicRoot: "./public",
+        outputDir: "./dist/assestant",
+        useTypeScript: true,
+        includes: [builtinFilters.includeAll, builtinFilters.noInvalidAssets],
+        ..._ops,
+    };
+
+    return {
+        input: (() => 
+        {
+            const includes = ops.includes;
+            if (includes.every((f) => typeof f === "string")) return includes;
+            else return listFilesByInclusion(ops.publicRoot, includes as InclusionFilter[]);
+        })(),
+  watch: {
+    clearScreen: false
+  },
+        ...ops.rollupOptions,
+
         output: 
         {
             dir: ops.outputDir,
             format: "esm",
             preserveModules: true,
-            preserveModulesRoot: ops.publicRoot
+            preserveModulesRoot: ops.publicRoot,
+            ...(ops.rollupOptions?.output ?? {})
         },
         plugins:
         [
-            
+            assestantPlugin(ops),
+            ...(ops.rollupOptions?.plugins ?? [])
         ]
     }
 }

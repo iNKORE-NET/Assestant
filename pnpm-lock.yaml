@@ -72,8 +72,14 @@ importers:
         specifier: ^5.3.3
         version: 5.7.3
 
-  packages/bundler-common:
+  packages/bundler:
     dependencies:
+      '@rollup/pluginutils':
+        specifier: ^5.1.4
+        version: 5.1.4(rollup@4.30.1)
+      glob:
+        specifier: ^10.3.15
+        version: 10.4.5
       rollup:
         specifier: 2.x || 3.x || 4.x
         version: 4.30.1
@@ -84,18 +90,25 @@ importers:
       '@assestant/runtime':
         specifier: workspace:^
         version: link:../runtime
+      type-fest:
+        specifier: ^4.32.0
+        version: 4.32.0
 
-  packages/bundler-rollup:
+  packages/dummy:
     dependencies:
-      '@inkore/rollup-plugins':
-        specifier: 0.3.2
-        version: 0.3.2(glob@11.0.1)(javascript-obfuscator@4.1.1)(rollup@4.30.1)
+      '@assestant/runtime':
+        specifier: workspace:^
+        version: link:../runtime
       rollup:
         specifier: 2.x || 3.x || 4.x
         version: 4.30.1
-      sharp:
-        specifier: ^0.33.5
-        version: 0.33.5
+    devDependencies:
+      '@assestant/bundler':
+        specifier: workspace:^
+        version: link:../bundler
+      '@rollup/plugin-typescript':
+        specifier: ^12.1.2
+        version: 12.1.2(rollup@4.30.1)(tslib@2.8.1)(typescript@5.7.3)
 
   packages/runtime: {}
 
@@ -242,23 +255,7 @@ packages:
 
   '@inkore/rollup-plugins@0.3.1':
     resolution: {integrity: sha512-pntzrDPif4lfG1br88AXZVQXnH8BqxTO5inAwdJmc9rqM6uIxkd0jDF+eOxn3ma8TWKln+p4UiYM3Yz3926+Eg==}
-    peerDependencies:
-      glob: ^10.3.15
-      javascript-obfuscator: ^4.1.0
-      postcss: ^8.4.38
-      postcss-modules: ^6.0.0
-      rollup: 2.x || 3.x || 4.x
-      sass: ^1.77.1
-    peerDependenciesMeta:
-      postcss:
-        optional: true
-      postcss-modules:
-        optional: true
-      sass:
-        optional: true
-
-  '@inkore/rollup-plugins@0.3.2':
-    resolution: {integrity: sha512-ACbV7/bclVkaPeZJaj/J3tMphj013pQR0tW7uEfeHIXAqYvgY62BZ57X4vuYD9Ex1luMeZqFqZmRTcobCbydFw==}
+    deprecated: Critical bug found, please use 0.3.2. Same API but fixed that bug.
     peerDependencies:
       glob: ^10.3.15
       javascript-obfuscator: ^4.1.0
@@ -1094,11 +1091,6 @@ packages:
     resolution: {integrity: sha512-7Bv8RF0k6xjo7d4A/PxYLbUCfb6c+Vpd2/mB2yRDlew7Jb5hEXiCD9ibfO7wpk8i4sevK6DFny9h7EYbM3/sHg==}
     hasBin: true
 
-  glob@11.0.1:
-    resolution: {integrity: sha512-zrQDm8XPnYEKawJScsnM0QzobJxlT/kHOOlRTio8IH/GrmxRE5fjllkzdaHclIuNjUQTJYH2xHNIGfdpJkDJUw==}
-    engines: {node: 20 || >=22}
-    hasBin: true
-
   glob@7.2.3:
     resolution: {integrity: sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==}
     deprecated: Glob versions prior to v9 are no longer supported
@@ -1331,10 +1323,6 @@ packages:
   jackspeak@3.4.3:
     resolution: {integrity: sha512-OGlZQpz2yfahA/Rd1Y8Cd9SIEsqvXkLVoSw/cgwhnhFMDbsQFeZYoJJ7bIZBS9BcamUW96asq/npPWugM+RQBw==}
 
-  jackspeak@4.0.2:
-    resolution: {integrity: sha512-bZsjR/iRjl1Nk1UkjGpAzLNfQtzuijhn2g+pbZb98HQ1Gk8vM9hfbxeMBP+M2/UUdwj0RqGG3mlvk2MsAqwvEw==}
-    engines: {node: 20 || >=22}
-
   javascript-obfuscator@4.1.1:
     resolution: {integrity: sha512-gt+KZpIIrrxXHEQGD8xZrL8mTRwRY0U76/xz/YX0gZdPrSqQhT/c7dYLASlLlecT3r+FxE7je/+C0oLnTDCx4A==}
     engines: {node: '>=12.22.0'}
@@ -1413,10 +1401,6 @@ packages:
   lru-cache@10.4.3:
     resolution: {integrity: sha512-JNAzZcXrCt42VGLuYz0zfAzDfAvJWW6AfYlDBQyDV5DClI2m5sAmK+OIO7s59XfsRsWHp02jAJrRadPRGTt6SQ==}
 
-  lru-cache@11.0.2:
-    resolution: {integrity: sha512-123qHRfJBmo2jXDbo/a5YOQrJoHF/GNQTLzQ5+IdK5pWpceK17yRc6ozlWd25FxvGKQbIUs91fDFkXmDHTKcyA==}
-    engines: {node: 20 || >=22}
-
   magic-string@0.30.17:
     resolution: {integrity: sha512-sNPKHvyjVf7gyjwS4xGTaW/mCnF8wnjtifKBEhxfZ7E/S8tQ0rssrwGNn6q8JH/ohItJfSQp9mBtQYuTlH5QnA==}
 
@@ -1434,10 +1418,6 @@ packages:
   micromatch@4.0.8:
     resolution: {integrity: sha512-PXwfBhYu0hBCPw8Dn0E+WDYb7af3dSLVWKi3HGv84IdF4TyFoC0ysxFd0Goxw7nSv4T/PzEJQxsYsEiFCKo2BA==}
     engines: {node: '>=8.6'}
-
-  minimatch@10.0.1:
-    resolution: {integrity: sha512-ethXTt3SGGR+95gudmqJ1eNhRO7eGEGIgYA9vnPatK4/etz2MEVDno5GMCibdMTuBMyElzIlgxMna3K94XDIDQ==}
-    engines: {node: 20 || >=22}
 
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
@@ -1560,10 +1540,6 @@ packages:
   path-scurry@1.11.1:
     resolution: {integrity: sha512-Xa4Nw17FS9ApQFJ9umLiJS4orGjm7ZzwUrwamcGQuHSzDyth9boKDaycYdDcZDuqYATXw4HFXgaqWTctW/v1HA==}
     engines: {node: '>=16 || 14 >=14.18'}
-
-  path-scurry@2.0.0:
-    resolution: {integrity: sha512-ypGJsmGtdXUOeM5u93TyeIEfEhM6s+ljAhrk5vAvSx8uyY/02OvrZnA0YNGUrPXfpJMgI1ODd3nwz8Npx4O4cg==}
-    engines: {node: 20 || >=22}
 
   path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}
@@ -1881,6 +1857,10 @@ packages:
     resolution: {integrity: sha512-Ne+eE4r0/iWnpAxD852z3A+N0Bt5RN//NjJwRd2VFHEmrywxf5vsZlh4R6lixl6B+wz/8d+maTSAkN1FIkI3LQ==}
     engines: {node: '>=10'}
 
+  type-fest@4.32.0:
+    resolution: {integrity: sha512-rfgpoi08xagF3JSdtJlCwMq9DGNDE0IMh3Mkpc1wUypg9vPi786AiqeBBKcqvIkq42azsBM85N490fyZjeUftw==}
+    engines: {node: '>=16'}
+
   typed-array-buffer@1.0.3:
     resolution: {integrity: sha512-nAYYwfY3qnzX30IkA6AQZjVbtK6duGontcQm1WSG1MD94YLqK0515GNApXkoxKOWMusVssAHWLh9SeaoefYFGw==}
     engines: {node: '>= 0.4'}
@@ -2099,26 +2079,6 @@ snapshots:
       estree-walker: 3.0.3
       fs-extra: 11.2.0
       glob: 10.4.5
-      globby: 14.0.2
-      is-plain-object: 5.0.0
-      javascript-obfuscator: 4.1.1
-      magic-string: 0.30.17
-      perf-regexes: 1.0.1
-      rimraf: 5.0.10
-      rollup: 4.30.1
-      skip-regex: 1.0.2
-
-  '@inkore/rollup-plugins@0.3.2(glob@11.0.1)(javascript-obfuscator@4.1.1)(rollup@4.30.1)':
-    dependencies:
-      '@niceties/logger': 1.1.13
-      '@rollup/pluginutils': 5.1.4(rollup@4.30.1)
-      acorn: 8.14.0
-      acorn-typescript: 1.4.13(acorn@8.14.0)
-      acorn-walk: 8.3.4
-      colorette: 2.0.20
-      estree-walker: 3.0.3
-      fs-extra: 11.2.0
-      glob: 11.0.1
       globby: 14.0.2
       is-plain-object: 5.0.0
       javascript-obfuscator: 4.1.1
@@ -3072,15 +3032,6 @@ snapshots:
       package-json-from-dist: 1.0.1
       path-scurry: 1.11.1
 
-  glob@11.0.1:
-    dependencies:
-      foreground-child: 3.3.0
-      jackspeak: 4.0.2
-      minimatch: 10.0.1
-      minipass: 7.1.2
-      package-json-from-dist: 1.0.1
-      path-scurry: 2.0.0
-
   glob@7.2.3:
     dependencies:
       fs.realpath: 1.0.0
@@ -3324,10 +3275,6 @@ snapshots:
     optionalDependencies:
       '@pkgjs/parseargs': 0.11.0
 
-  jackspeak@4.0.2:
-    dependencies:
-      '@isaacs/cliui': 8.0.2
-
   javascript-obfuscator@4.1.1:
     dependencies:
       '@javascript-obfuscator/escodegen': 2.3.0
@@ -3425,8 +3372,6 @@ snapshots:
 
   lru-cache@10.4.3: {}
 
-  lru-cache@11.0.2: {}
-
   magic-string@0.30.17:
     dependencies:
       '@jridgewell/sourcemap-codec': 1.5.0
@@ -3445,10 +3390,6 @@ snapshots:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
-
-  minimatch@10.0.1:
-    dependencies:
-      brace-expansion: 2.0.1
 
   minimatch@3.1.2:
     dependencies:
@@ -3579,11 +3520,6 @@ snapshots:
   path-scurry@1.11.1:
     dependencies:
       lru-cache: 10.4.3
-      minipass: 7.1.2
-
-  path-scurry@2.0.0:
-    dependencies:
-      lru-cache: 11.0.2
       minipass: 7.1.2
 
   path-type@4.0.0: {}
@@ -3968,6 +3904,8 @@ snapshots:
       prelude-ls: 1.2.1
 
   type-fest@0.20.2: {}
+
+  type-fest@4.32.0: {}
 
   typed-array-buffer@1.0.3:
     dependencies:

@@ -1,0 +1,45 @@
+{
+    "name": "dummy",
+    "private": true,
+    "version": "1.0.0",
+    "description": "",
+    "type": "module",
+    "scripts": 
+    {
+        "dev": "rollup --config rollup.config.mjs --watch --environment MODE:dev",
+        "build": "rollup -c rollup.config.mjs --environment MODE:prod"
+    },
+    "keywords": 
+    [
+    ],
+    "exports": 
+    {
+        "./assets/*": 
+        {
+            "types": "./dist/assestant/*.d.ts",
+            "default": "./dist/assestant/*.js"
+        }
+    },
+    "dependencies": 
+    {
+        "@assestant/runtime": "workspace:^"
+    },
+    "devDependencies": 
+    {
+        "@assestant/bundler": "workspace:^",
+        "@rollup/plugin-typescript": "^12.1.2"
+    },
+    "peerDependencies": 
+    {
+        "rollup": "2.x || 3.x || 4.x"
+    },
+    "peerDependenciesMeta": 
+    {
+        "rollup": 
+        {
+            "optional": true
+        }
+    },
+    "author": "",
+    "license": "ISC"
+}

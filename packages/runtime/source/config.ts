@@ -76,13 +76,19 @@ export type AssestantConfig =
     isOnline: boolean | (() => boolean);
 }
 
-export const assestantConfig: AssestantConfig = 
+export function getAssestantConfig(): AssestantConfig
 {
-    packages: { "default": { onlineUrl: undefined, assetSource: "auto" } },
-    isOnline: () => (navigator?.onLine ?? true)
-};
+    if (!window.assestantConfig)
+    {
+        window.assestantConfig = 
+        {
+            packages: { "default": { onlineUrl: undefined, assetSource: "auto" } },
+            isOnline: () => (navigator?.onLine ?? true)
+        };
+    }
 
-window.assestantConfig = assestantConfig;
+    return window.assestantConfig;
+}
 
 export function configureAssestant(config: Partial<AssestantConfig>)
 {
@@ -92,19 +98,19 @@ export function configureAssestant(config: Partial<AssestantConfig>)
         {
             for (const packageName in config.packages)
             {
-                if (packageName in assestantConfig.packages)
+                if (packageName in getAssestantConfig().packages)
                 {
-                    Object.assign(assestantConfig.packages[packageName], config.packages[packageName]);
+                    Object.assign(getAssestantConfig().packages[packageName], config.packages[packageName]);
                 }
                 else
                 {
-                    assestantConfig.packages[packageName] = config.packages[packageName];
+                    getAssestantConfig().packages[packageName] = config.packages[packageName];
                 }
             }
         }
         else
         {
-            assestantConfig[prop] = config[prop];
+            getAssestantConfig()[prop] = config[prop];
         }
     }
 }

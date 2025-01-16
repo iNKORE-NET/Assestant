@@ -1,4 +1,4 @@
-import { assestantConfig, type AssetSource } from "./config";
+import { getAssestantConfig, type AssetSource } from "./config";
 import { removeSlash, resolveValue } from "./utilities";
 
 export class AssetItem
@@ -65,7 +65,8 @@ export class AssetItem
     get src() 
     { 
         let method: AssetSource = resolveValue(this.packageConfig.assetSource, [this]);
-
+        const assestantConfig = getAssestantConfig();
+        
         switch (method)
         {
             case "local": return this.srcLocal;
@@ -75,7 +76,14 @@ export class AssetItem
         }
     }
 
-    protected get packageConfig() { return { ...assestantConfig.packages["default"], ...assestantConfig.packages[this.package] }; }
+    /**
+     * The configuration for the package that the asset is imported from.
+     */
+    protected get packageConfig() 
+    { 
+        const assestantConfig = getAssestantConfig();
+        return { ...assestantConfig.packages["default"], ...assestantConfig.packages[this.package] }; 
+    }
 
     /** Returns the `src` property. */
     public toString() { return this.src; }

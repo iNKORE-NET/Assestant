@@ -4,7 +4,7 @@ import type { Plugin as RollupPlugin } from "rollup";
 import path from "path";
 import fs from "fs";
 import { createFilter } from "@rollup/pluginutils";
-import { createIndex } from "source/indexing";
+import { createIndex, type CreateIndexOptions } from "source/indexing";
 import { getPackageInfo } from "source/utilities";
 
 export type AssestantPluginOptions =
@@ -29,8 +29,10 @@ export type AssestantPluginOptions =
     /**
      * The path to the script that will be preloaded before every asset item is resolved.
      * This is useful for adding default AssestantPackageConfig to the runtime.
+     * If a string is provided, it will be used as the path to the js file.
+     * All the paths are relative to the __dirname.
      */
-    preloadScript?: string[];
+    preloadScripts?: CreateIndexOptions["preloadScripts"];
 }
 
 export type AssestantPluginOptionsInput = AssestantPluginOptions &
@@ -38,6 +40,8 @@ export type AssestantPluginOptionsInput = AssestantPluginOptions &
     exclude?: string[];
     include?: string[];
 }
+
+const dirname = path.resolve(".");
 
 /**
  * A Rollup plugin that generates asset items for the Assestant runtime.
@@ -72,7 +76,8 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                 ({ 
                     srcFullPath: id, publicRoot, 
                     indexFullPath: indexJSFullPath,
-                    outputDir, packageName 
+                    outputDir, packageName, dirname,
+                    preloadScripts: ops.preloadScripts,
                 }, "js");
 
                 // this.emitFile
@@ -90,7 +95,8 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                     ({ 
                         srcFullPath: id, publicRoot, 
                         indexFullPath: dtsPat,
-                        outputDir, packageName 
+                        outputDir, packageName, dirname,
+                        preloadScripts: ops.preloadScripts
                     }, "dts");
 
                     this.emitFile

@@ -56,7 +56,7 @@ export function listFilesByInclusion(dirname: string, filters: InclusionFilter[]
     for (const filter of filters)
     {
         const filtered = listFilesBySelector(dirname, filter);
-        console.log(filtered);
+        
         if (filter.action === "include")
         {
             filtered.forEach((f) => { if(!result.includes(f)) result.push(f); });

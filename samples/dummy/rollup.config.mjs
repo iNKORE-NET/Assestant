@@ -39,7 +39,7 @@ const config =
         useTypeScript: true,
         publicRoot: "public",
         outputDir: "dist/assestant",
-        preloadScript: ["dist/preload.js"],
+        preloadScripts: ["dist/preload.js"],
     })
 ]
 

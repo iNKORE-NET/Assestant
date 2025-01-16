@@ -31,7 +31,7 @@
     },
     "devDependencies": 
     {
-        "@inkore/rollup-plugins": "^0.3.1",
+        "@inkore/rollup-plugins": "^0.3.2",
         "@rollup/plugin-json": "^6.1.0",
         "@rollup/plugin-node-resolve": "^16.0.0",
         "@rollup/plugin-typescript": "^12.1.2",

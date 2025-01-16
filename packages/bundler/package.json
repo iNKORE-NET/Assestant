@@ -3,41 +3,53 @@
     "version": "1.0.0",
     "description": "",
     "type": "module",
-    "scripts": {
+    "scripts": 
+    {
         "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",
         "build": "rollup -c rollup.config.mjs --configPlugin typescript --environment MODE:prod"
     },
-    "keywords": [],
-    "exports": {
-        ".": {
+    "keywords": 
+    [
+    ],
+    "exports": 
+    {
+        ".": 
+        {
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
         },
-        "./*": {
+        "./*": 
+        {
             "types": "./dist/bundlers/*/index.d.ts",
             "default": "./dist/bundlers/*/index.js"
         }
     },
-    "dependencies": {
+    "dependencies": 
+    {
         "glob": "^10.3.15",
         "sharp": "^0.33.5"
     },
-    "devDependencies": {
+    "devDependencies": 
+    {
         "@assestant/runtime": "workspace:^",
         "type-fest": "^4.32.0"
     },
-    "peerDependencies": {
+    "peerDependencies": 
+    {
         "@rollup/pluginutils": "^5.1.4",
         "rollup": "2.x || 3.x || 4.x"
     },
-    "peerDependenciesMeta": {
-        "rollup": {
+    "peerDependenciesMeta": 
+    {
+        "rollup": 
+        {
             "optional": true
         },
-        "@rollup/pluginutils": {
+        "@rollup/pluginutils": 
+        {
             "optional": true
         }
     },
-    "author": "",
-    "license": "ISC"
+    "author": "notyoojun",
+    "license": "LGPL-3.0-or-later"
 }

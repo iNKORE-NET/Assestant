@@ -40,6 +40,10 @@
             "optional": true
         }
     },
-    "author": "",
-    "license": "ISC"
+    "author": "notyoojun",
+    "files": 
+    [
+        "dist/",
+        "public/"
+    ]
 }

@@ -9,8 +9,8 @@ importers:
   .:
     devDependencies:
       '@inkore/rollup-plugins':
-        specifier: ^0.3.1
-        version: 0.3.1(glob@10.4.5)(javascript-obfuscator@4.1.1)(rollup@4.30.1)
+        specifier: ^0.3.2
+        version: 0.3.2(glob@10.4.5)(javascript-obfuscator@4.1.1)(rollup@4.30.1)
       '@rollup/plugin-json':
         specifier: ^6.1.0
         version: 6.1.0(rollup@4.30.1)
@@ -94,23 +94,23 @@ importers:
         specifier: ^4.32.0
         version: 4.32.0
 
-  packages/dummy:
+  packages/runtime: {}
+
+  samples/dummy:
     dependencies:
       '@assestant/runtime':
         specifier: workspace:^
-        version: link:../runtime
+        version: link:../../packages/runtime
       rollup:
         specifier: 2.x || 3.x || 4.x
         version: 4.30.1
     devDependencies:
       '@assestant/bundler':
         specifier: workspace:^
-        version: link:../bundler
+        version: link:../../packages/bundler
       '@rollup/plugin-typescript':
         specifier: ^12.1.2
         version: 12.1.2(rollup@4.30.1)(tslib@2.8.1)(typescript@5.7.3)
-
-  packages/runtime: {}
 
 packages:
 
@@ -253,9 +253,8 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@inkore/rollup-plugins@0.3.1':
-    resolution: {integrity: sha512-pntzrDPif4lfG1br88AXZVQXnH8BqxTO5inAwdJmc9rqM6uIxkd0jDF+eOxn3ma8TWKln+p4UiYM3Yz3926+Eg==}
-    deprecated: Critical bug found, please use 0.3.2. Same API but fixed that bug.
+  '@inkore/rollup-plugins@0.3.2':
+    resolution: {integrity: sha512-ACbV7/bclVkaPeZJaj/J3tMphj013pQR0tW7uEfeHIXAqYvgY62BZ57X4vuYD9Ex1luMeZqFqZmRTcobCbydFw==}
     peerDependencies:
       glob: ^10.3.15
       javascript-obfuscator: ^4.1.0
@@ -2068,7 +2067,7 @@ snapshots:
   '@img/sharp-win32-x64@0.33.5':
     optional: true
 
-  '@inkore/rollup-plugins@0.3.1(glob@10.4.5)(javascript-obfuscator@4.1.1)(rollup@4.30.1)':
+  '@inkore/rollup-plugins@0.3.2(glob@10.4.5)(javascript-obfuscator@4.1.1)(rollup@4.30.1)':
     dependencies:
       '@niceties/logger': 1.1.13
       '@rollup/pluginutils': 5.1.4(rollup@4.30.1)

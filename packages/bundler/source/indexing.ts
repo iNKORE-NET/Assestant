@@ -4,6 +4,7 @@ import fs from "fs";
 import createAsset from "./construction";
 import { AssetItemTemplateJS, AssetItemTemplateDTS } from "./templates";
 import { toSafeName } from "./utilities";
+import type { ArrayElement } from "type-fest/source/internal";
 
 
 export type CreateIndexOptions =
@@ -14,11 +15,17 @@ export type CreateIndexOptions =
     publicRoot: string;
     /** The output directory. */
     outputDir: string;
+    dirname: string;
     packageName: string;
     indexFullPath: string;
+    preloadScripts?: (string | 
+    {
+        js?: string;
+        dts?: string;
+    })[];
 }
 
-export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outputDir, packageName }: CreateIndexOptions, file: "js" | "dts")
+export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outputDir, packageName, preloadScripts, dirname }: CreateIndexOptions, file: "js" | "dts")
 {
     const relat = path.relative(publicRoot, srcFullPath).replaceAll("\\", "/");
     const dt = await createAsset(srcFullPath);
@@ -39,6 +46,18 @@ export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outp
 
         construction = construction.substring(0, construction.length - "\n".length);
     }
+
+    const importPreloads = preloadScripts?.map((preload) => 
+    {
+        let scripts: Exclude<ArrayElement<CreateIndexOptions["preloadScripts"]>, undefined | string> | undefined = undefined;
+        if (typeof preload === "string") scripts = { js: preload };
+        else scripts = preload;
+        const script = scripts[file];
+
+        if (!script) return undefined;
+        return `import ${JSON.stringify(path.relative(indexDirname, path.join(dirname, script)))};`;
+
+    }).filter(v => typeof v === "string").join("\n");
     
     function fillValues(input: string)
     {
@@ -49,6 +68,9 @@ export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outp
         content = content.replaceAll("__ASSET_CONSTRUCTOR__", dt.constuctor);
         content = content.replaceAll("__ASSET_NAME__", toSafeName(path.basename(srcFullPath).replace(/\.[^/.]+$/, "")));
         content = content.replaceAll("__OTHER_CONSTRUCTIONS__", construction);
+
+        if (importPreloads)
+            content = importPreloads + "\n" + content;
 
         return content;
     }

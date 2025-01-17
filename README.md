@@ -1,11 +1,3 @@
-# Assestant
-
-Another way to bundle assets (e.g. images, fonts, audio) into your NPM package effortlessly
-
-The goal is to provide a simple way to bundle assets into your NPM package. This is useful when you want to distribute assets with your package, but don't want to include them in the source code.
-
----
-
 <p align="center">
   <a target="_blank" rel="noopener noreferrer">
     <img width="128" src="https://github.com/iNKORE-NET/.github/blob/main/assets/icons/NodejsLibrary_256w.png?raw=true" alt="iNKORE Logo">

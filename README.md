@@ -33,6 +33,7 @@
 
 <br>
 
+
 ## ✨ Features
 
 - **Automatic**: Automatically bundle assets into your NPM package, no more making one file for each single asset file.
@@ -51,6 +52,8 @@ Supported **Library Bundlers** to make the library with Assestant: Rollup, ... (
 
 Supported **Website Builders** you can use the library made with Assestant: Vite, Next.js, Docusaurus (Docusaurus may need a few special configs when resolving SVG assets), ... (more coming soon)
 
+This project is still in a stage of early development, so don't give too much expectation, and if there's something wrong, please report!
+
 ### Do I need this?
 
 You may not always need Assestant when building your NPM package.
@@ -65,7 +68,7 @@ The stuff in this section is kinda long, which includes the problem we have, the
 
 Have you ever tried to add assets (especially images, fonts and static files) to your NPM package? We have encountered this problem - when we're making our React control library, we may sometimes need images or icons to be included in the package. That is absolutely not as easy as it seems. We usually use Vite, Next.js and Docusaurus (the last two are based on Webpack) to build our final website / applications. If you have ever used these tools, you may know that there are a little bit of differences when coming to asset handling.
 
-Let's use Vite and Next.js as examples. If you want to include an image in your package, you may need to import it in your source code like this:
+Let's use Vite and Next.js as examples. If you want to include an image in your package **with Vite**, you may need to import it in your source code like this:
 
 ```tsx
 import image from "path/to/image.png";
@@ -76,7 +79,7 @@ export const ImageComponent: React.FunctionComponent = () =>
 };
 ```
 
-As you can see, the image is imported as a module, and the default export is the URL of the image. In Next.js, you may use the same way to import the image, but things get unusual when using the imported image. The default export is no longer even a string, but an object. You may need to use `image.src` to get the URL of the image like this:
+As you can see, the image is imported as a module, and the default export is the URL of the image. In **Next.js**, you may use the same way to import the image, but things get unusual when using the imported image. The default export is no longer even a string, but an object. You may need to use `image.src` to get the URL of the image like this:
 
 ```tsx
 import image from "path/to/image.png";
@@ -115,7 +118,7 @@ It's a good idea to do things like this (if we put the resolveAsset function in 
 
 Personally, I believe I'm not a man who gives up easily. I've been thinking about this for a long time, and finally, I came up with an idea - why not use a middleware, but more powerful and automatic? That's why I created Assestant. By parsing this name - Assets + Assistant, you may know what it does. It's an assistant that helps you to include assets in your NPM package, and it's powerful enough to handle the assets automatically. You don't need to create a file for each asset, and you can get the metadata of the asset easily. That's what Assestant does.
 
-You can use Assestant with your favorite bundler (currently we only do Rollup, but we will support more bundlers in the future). It's easy to use, and it's powerful. You can include assets in your NPM package with just a few lines of code. And the dist can be used in any bundler or framework.
+You can use Assestant with your favorite bundler (currently we only do Rollup, but we will support more bundlers in the future). It's easy to use, and it's powerful. You can include assets in your NPM package with just a few lines of code. And the dist can be used in most bundlers or frameworks.
 
 ## 😰 Limitations
 

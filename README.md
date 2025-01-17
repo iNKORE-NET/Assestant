@@ -43,15 +43,17 @@ The goal is to provide a simple way to bundle assets into your NPM package. This
 
 ## ✨ Features
 
-- **Automatic**: Automatically bundle assets into your NPM package
+- **Automatic**: Automatically bundle assets into your NPM package, no more making one file for each single asset file.
 
-- **Metadata**: Get the metadata of the asset (e.g. width, height, file name, etc.)
+- **Metadata**: Get the metadata of the asset (e.g. width, height, file name, etc.) without requesting the file (coded when bundling).
 
-- **Universal**: Use the dist in any bundler or framework (listed below)
+- **Universal**: Use the dist in any bundler or framework (listed below).
 
-- **Elegant**: Include assets in your NPM package with just a few lines of code and use them in your source code easily
+- **Elegant**: Include assets in your NPM package with just a few lines of code and use them in your source code easily.
 
-- **Tree-Shaking**: You can add assets as much as you want, and the consumer will only keep what they need
+- **Tree-Shaking**: You can add assets as much as you want, and the consumer will only keep what they need.
+
+- **Online CDN Support**: you can optionally create a signle site specially for resources and throw away the resources when bundling your application.
 
 **Supported Bundlers to make the library**: Rollup, ... (more coming soon)
 

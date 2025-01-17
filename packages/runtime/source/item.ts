@@ -48,7 +48,7 @@ export class AssetItem
 
     /**
      * The full url to the asset when fetching from the local package.
-     * @throws An error if the online url base is not set in assesstantConfig.
+     * @throws An error if the online url base is not set in assestantConfig.
      */
     get srcOnline() 
     { 

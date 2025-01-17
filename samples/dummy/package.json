@@ -18,6 +18,11 @@
         {
             "types": "./dist/assestant/*.d.ts",
             "default": "./dist/assestant/*.js"
+        },
+        ".": 
+        {
+            "types": "./dist/index.d.ts",
+            "default": "./dist/index.js"
         }
     },
     "dependencies": 

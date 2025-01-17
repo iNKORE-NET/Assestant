@@ -9,6 +9,7 @@ import viteLogo from '/vite.svg';
 import FONT from "dummy/assets/fonts/pacifico/Pacifico-Regular.ttf";
 
 import { Global } from "@emotion/react";
+import { blook } from "dummy";
 
 const DOCS_SITE = "https://docs.inkore.net/assestant";
 
@@ -22,6 +23,10 @@ const App: React.FunctionComponent<{ }> = () =>
                     {
                         backgroundImage: `url("${BG.src}")`,
                         backgroundAttachment: "fixed",
+                    },
+
+                    "h1":
+                    {
                         fontFamily: "I Do Not Know",
                     },
 
@@ -49,10 +54,15 @@ const App: React.FunctionComponent<{ }> = () =>
                         Let's download somethin!
                     </button>
                 </a>
-                <p>
-                    Now you can ship your assets along with your NPM package with Assesant!
-                </p>
+                <a>
+                    <button onClick={blook}>
+                        Blook!
+                    </button>
+                </a>
             </div>
+            <p>
+                Now you can ship your assets along with your NPM package with Assesant!
+            </p>
             <a href={DOCS_SITE}>
                 <p className="read-the-docs">
                     Click on the Vite and React logos to learn more

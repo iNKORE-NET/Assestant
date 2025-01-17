@@ -37,9 +37,9 @@
 
 - **Automatic**: Automatically bundle assets into your NPM package, no more making one file for each single asset file.
 
-- **Metadata**: Get the metadata of the asset (e.g. width, height, file name, etc.) without requesting the file (coded when bundling).
+- **Metadata**: Get the metadata of the asset (e.g. width, height, file name, etc.) without requesting the actual file (coded when bundling).
 
-- **Universal**: Use the dist in any bundler or framework (listed below).
+- **Universal**: Use the dist in most bundlers or frameworks (listed below).
 
 - **Elegant**: Include assets in your NPM package with just a few lines of code and use them in your source code easily.
 
@@ -47,9 +47,9 @@
 
 - **Online CDN Support**: you can optionally create a signle site specially for resources and throw away the resources when bundling your application.
 
-**Supported Bundlers to make the library**: Rollup, ... (more coming soon)
+Supported **Library Bundlers** to make the library with Assestant: Rollup, ... (more coming soon)
 
-**Supported Website Builder you can use the library made with Assestant**: Vite, Next.js, Docusaurus, ... (more coming soon)
+Supported **Website Builders** you can use the library made with Assestant: Vite, Next.js, Docusaurus (Docusaurus may need a few special configs when resolving SVG assets), ... (more coming soon)
 
 ### Do I need this?
 

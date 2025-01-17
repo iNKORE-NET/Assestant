@@ -135,4 +135,6 @@ There's no silver bullet in the world. Assestant is not perfect, and it has some
 
 There are also a few limitations for comsumers who uses libraries made with Assestant:
 
-- **Tree-shaking**: The build tool of
+- **Tree-shaking**: The build tool of the final website is better to support tree-shaking, libraries made with Assestant usually includes all the assets anyone may need, but the final dist of your website should only contain the assets you really used.
+
+- **Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. There's no matter what type the imported ASSE variable is, but your build tool must support this pattern to use libraries made with Assestant.

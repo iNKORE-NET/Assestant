@@ -52,7 +52,7 @@ Supported **Library Bundlers** to make the library with Assestant: Rollup, ... (
 
 Supported **Website Builders** you can use the library made with Assestant: Vite, Next.js, Docusaurus (Docusaurus may need a few special configs when resolving SVG assets), ... (more coming soon)
 
-This project is still in a stage of early development, so don't give too much expectation, and if there's something wrong, please report!
+This project is still in a stage of early development, so don't give expectation too high, and if there's something wrong, please report!
 
 ### Do I need this?
 

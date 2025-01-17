@@ -45,7 +45,7 @@
 
 - **Tree-Shaking**: You can add assets as much as you want, and the consumer will only keep what they need.
 
-- **Online CDN Support**: you can optionally create a signle site specially for resources and throw away the resources when bundling your application.
+- **Online CDN Support**: you can optionally create a signle site specially for resources, throw away the resources when bundling your application, and always fetch the resources from your CDN site when running the application.
 
 Supported **Library Bundlers** to make the library with Assestant: Rollup, ... (more coming soon)
 

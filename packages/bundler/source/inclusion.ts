@@ -1,5 +1,5 @@
 import { glob } from "glob";
-import path from "path";
+import { posix as path } from "path";
 import { invalidAssetExtensions } from "./utilities";
 
 export type InclusionFilter = Selector &

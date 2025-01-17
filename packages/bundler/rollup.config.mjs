@@ -15,7 +15,7 @@ const __dirname = path.resolve();
 /** @type {import("rollup").RollupOptions} */
 const config =
 {
-    input: ["source/index.ts", ...glob.sync("source/bundlers/*/index.ts")],
+    input: ["source/index.ts", ...glob.sync("source/bundlers/*/index.ts"), ...glob.sync("source/declares/*.ts")],
     output:
     {
         dir: "dist",

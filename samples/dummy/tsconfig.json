@@ -3,6 +3,7 @@
     "compilerOptions":
     {
         "baseUrl": ".",
+        "outDir": "./dist",
         "target": "esnext",
         "lib":
         [
@@ -30,8 +31,15 @@
     },
     "exclude":
     [
-        "node_modules",
         "dist", "public",
         "**/*.mjs"
+    ],
+    "include":
+    [
+        "source/**/*"
+    ],
+    "files":
+    [
+        "source/index.d.ts"
     ]
 }

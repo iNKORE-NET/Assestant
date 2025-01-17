@@ -18,6 +18,11 @@
             "types": "./dist/index.d.ts",
             "default": "./dist/index.js"
         },
+        "./client": 
+        {
+            "types": "./dist/declares/client.d.ts",
+            "default": "./dist/bundlers/client/index.js"
+        },
         "./*": 
         {
             "types": "./dist/bundlers/*/index.d.ts",

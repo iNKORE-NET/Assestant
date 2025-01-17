@@ -1,42 +1,16 @@
 
 import type { Plugin as RollupPlugin } from "rollup";
 
-import path from "path";
+import { posix as path } from "path";
 import fs from "fs";
 import { createFilter } from "@rollup/pluginutils";
 import { createIndex, type CreateIndexOptions } from "source/indexing";
 import { getPackageInfo } from "source/utilities";
+import type { AssestantOptions } from "source/config";
 
-export type AssestantPluginOptions =
+export type AssestantPluginOptionsInput = 
 {
-    /**
-     * The relative path to the public root directory that you want to include in the bundle.
-     * @default "./public"
-     */
-    publicRoot: string;
-
-    /**
-     * The relative path to the output directory.
-     * @default "./dist"
-     */
-    outputDir: string;
-
-    /**
-     * Add TypeScript declaration files to the bundle. This requires you to have the `@rollup/plugin-typescript` plugin installed.
-     */
-    useTypeScript: boolean;
-
-    /**
-     * The path to the script that will be preloaded before every asset item is resolved.
-     * This is useful for adding default AssestantPackageConfig to the runtime.
-     * If a string is provided, it will be used as the path to the js file.
-     * All the paths are relative to the __dirname.
-     */
-    preloadScripts?: CreateIndexOptions["preloadScripts"];
-}
-
-export type AssestantPluginOptionsInput = AssestantPluginOptions &
-{
+    assestant: AssestantOptions;
     exclude?: string[];
     include?: string[];
 }
@@ -47,12 +21,13 @@ const dirname = path.resolve(".");
  * A Rollup plugin that generates asset items for the Assestant runtime.
  * It's better to use Assestant by using the 'makeConfig' function instead of using this plugin directly.
  */
-export default function assestantPlugin(ops: AssestantPluginOptionsInput): RollupPlugin
+export default function bundlePlugin(ops: AssestantPluginOptionsInput): RollupPlugin
 {
+    const { assestant } = ops;
     const filter = createFilter(ops.include ?? ["**/*"], ops.exclude ?? ["node_modules/**"]);
     /** Absolute path */
-    const publicRoot = path.resolve(ops.publicRoot);
-    const outputDir = path.resolve(ops.outputDir);
+    const publicRoot = path.resolve(assestant.publicRoot);
+    const outputDir = path.resolve(assestant.outputDir);
     const packageName = getPackageInfo()?.name ?? "default";
 
     return {
@@ -77,7 +52,7 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                     srcFullPath: id, publicRoot, 
                     indexFullPath: indexJSFullPath,
                     outputDir, packageName, dirname,
-                    preloadScripts: ops.preloadScripts,
+                    preloadScripts: assestant.preloadScripts,
                 }, "js");
 
                 // this.emitFile
@@ -88,7 +63,7 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                 // });
                 bundle[key].code = indexJS.content;
 
-                if (ops.useTypeScript)
+                if (assestant.useTypeScript)
                 {
                     const dtsPat = path.join(path.dirname(indexJSFullPath), path.basename(indexJSFullPath, ".js") + ".d.ts");
                     const indexDTS = await createIndex
@@ -96,7 +71,7 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                         srcFullPath: id, publicRoot, 
                         indexFullPath: dtsPat,
                         outputDir, packageName, dirname,
-                        preloadScripts: ops.preloadScripts
+                        preloadScripts: assestant.preloadScripts
                     }, "dts");
 
                     this.emitFile
@@ -106,6 +81,8 @@ export default function assestantPlugin(ops: AssestantPluginOptionsInput): Rollu
                         source: indexDTS.content
                     });
                 }
+
+                
             }
         },
         async transform(code, id)

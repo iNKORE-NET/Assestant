@@ -1,7 +1,16 @@
 
 // @ts-check
-import { assestantConfig } from "@assestant/bundler/rollup";
+import { makeConfig } from "@assestant/bundler";
+import { consumerPlugin, bundleAssestant } from "@assestant/bundler/rollup";
 import typescript from "@rollup/plugin-typescript";
+
+const assestant = makeConfig
+({
+    useTypeScript: true,
+    publicRoot: "public",
+    outputDir: "dist/assestant",
+    preloadScripts: ["dist/preload.js"],
+});
 
 /** @type {import('rollup').RollupOptions[]} */
 const config =
@@ -31,16 +40,12 @@ const config =
                 },
                 removeComments: false,
             }),
+
+            consumerPlugin({ assestant })
         ]
     },
 
-    assestantConfig
-    ({
-        useTypeScript: true,
-        publicRoot: "public",
-        outputDir: "dist/assestant",
-        preloadScripts: ["dist/preload.js"],
-    })
+    bundleAssestant({ assestant })
 ]
 
 export default config;

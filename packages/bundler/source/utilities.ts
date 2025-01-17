@@ -1,4 +1,4 @@
-import path from "path";
+import { posix as path } from "path";
 import fs from "fs";
 
 import type { PackageJson } from "type-fest";
@@ -54,3 +54,11 @@ export const invalidAssetExtensions =
     ".js", ".jsx",
     ".css"
 ] as const;
+
+export type Many<T> = T | T[];
+
+
+export function isNotStrictEqual(a: string, b: string)
+{
+    return a.toLowerCase().trim() == b.toLowerCase().trim();
+}

@@ -1,59 +1,48 @@
 import type { RollupOptions, Plugin as RollupPlugin } from "rollup";
-
-import type { AssestantPluginOptions } from "./plugin";
-import type { PartialPartial } from "source/utilities";
+import type { Many, PartialPartial } from "source/utilities";
 
 import assestantPlugin from "./plugin";
 import { builtinFilters, listFilesByInclusion, type InclusionFilter } from "source/inclusion";
+import type { AssestantOptions, AssestantOptionsInput } from "source/config";
 
-export type MakeConfigOptions = AssestantPluginOptions &
+export type BundleAssestantOptions =
 {
-    /** 
-     * Which files should be included in the bundle.
-     * You can use a list of filters to make things easier,
-     * or you can use a list of strings as the files to include.
-     * @default 
-     * [includesEverything, excludesInvalidAssets]
-     */
-    includes: InclusionFilter[] | string[];
-
+    assestant: AssestantOptions;
     rollupOptions?: Omit<Partial<RollupOptions>, "plugins"> &
     {
         plugins?: RollupPlugin[];
     }
 }
 
-export type MakeConfigOptionsInput = PartialPartial<MakeConfigOptions, "outputDir" | "publicRoot" | "useTypeScript" | "includes">;
+export type BundleAssestantOptionsInput = BundleAssestantOptions;
 
-export function assestantConfig(_ops: MakeConfigOptionsInput): RollupOptions
+
+export function bundleAssestant(ops: BundleAssestantOptionsInput): RollupOptions;
+export function bundleAssestant(ops: BundleAssestantOptionsInput[]): RollupOptions[];
+
+export function bundleAssestant(ops: Many<BundleAssestantOptionsInput>): Many<RollupOptions>
 {
-    const ops: MakeConfigOptions =
-    {
-        publicRoot: "./public",
-        outputDir: "./dist/assestant",
-        useTypeScript: true,
-        includes: [builtinFilters.includeAll, builtinFilters.noInvalidAssets],
-        ..._ops,
-    };
+    if (Array.isArray(ops)) return ops.map((ops) => bundleAssestant(ops));
 
     return {
         input: (() => 
         {
-            const includes = ops.includes;
+            const includes = ops.assestant.includes;
             if (includes.every((f) => typeof f === "string")) return includes;
-            else return listFilesByInclusion(ops.publicRoot, includes as InclusionFilter[]);
+            else return listFilesByInclusion(ops.assestant.publicRoot, includes as InclusionFilter[]);
         })(),
-  watch: {
-    clearScreen: false
-  },
+        watch: 
+        {
+            clearScreen: false
+        },
         ...ops.rollupOptions,
 
         output: 
         {
-            dir: ops.outputDir,
+            dir: ops.assestant.outputDir,
             format: "esm",
             preserveModules: true,
-            preserveModulesRoot: ops.publicRoot,
+            preserveModulesRoot: ops.assestant.publicRoot,
             ...(ops.rollupOptions?.output ?? {})
         },
         plugins:

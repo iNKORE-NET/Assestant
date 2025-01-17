@@ -118,7 +118,7 @@ It's a good idea to do things like this (if we put the resolveAsset function in 
 
 Personally, I believe I'm not a man who gives up easily. I've been thinking about this for a long time, and finally, I came up with an idea - why not use a middleware, but more powerful and automatic? That's why I created Assestant. By parsing this name - Assets + Assistant, you may know what it does. It's an assistant that helps you to include assets in your NPM package, and it's powerful enough to handle the assets automatically. You don't need to create a file for each asset, and you can get the metadata of the asset easily. That's what Assestant does.
 
-You can use Assestant with your favorite bundler (currently we only do Rollup, but we will support more bundlers in the future). It's easy to use, and it's powerful. You can include assets in your NPM package with just a few lines of code. And the dist can be used in most bundlers or frameworks.
+You can use Assestant with your favorite bundler *(currently we only do Rollup, but we will support more bundlers in the future)*. It's easy to use, and it's powerful. You can include assets in your NPM package with just a few lines of code. And the dist can be used in most bundlers or frameworks.
 
 ## 😰 Limitations
 
@@ -126,10 +126,10 @@ There's no silver bullet in the world. Assestant is not perfect, and it has some
 
 - **ESM Recommeded**: As mentioned above, Assestant is designed for ESM, we've not tested it in CommonJS. Additionally, to import the asset outside, you need to modify the `exports` field in `package.json` to include the asset. This may not work well in CommonJS.
 
-- **Always Preserve Modules**: Assestant will always preserve the folder structure of the asset. This is very important for tree-shaking. If you want to include the asset in the root of the package, you may need to move the asset to the root of the package.
+- **Always Preserve Modules**: Assestant will always preserve the folder structure of the asset. This is very important for tree-shaking. If everything are bundled into one single file, the tree-shaking may longer work *(consumers will have to dist all the assets in your library even if they only use a tiny amount of them)*.
 
 There are also a few limitations for comsumers who uses libraries made with Assestant:
 
 - **Tree-shaking**: The build tool of the final website is better to support tree-shaking, libraries made with Assestant usually includes all the assets anyone may need, but the final dist of your website should only contain the assets you really used.
 
-- **Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. There's no matter what type the imported ASSE variable is, but your build tool must support this pattern to use libraries made with Assestant.
+- **Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. It doesn't matter what type the imported ASSE variable is *(mostly Assestant runtime will handle this correctly, but if you are using a build tool that doesn't work with Assestant, please submit an issue and we'll add support)*, but your build tool must support this pattern to use libraries made with Assestant.

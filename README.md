@@ -38,7 +38,7 @@
 
 - **Automatic**: Automatically bundle assets into your NPM package, no more making one file for each single asset file.
 
-- **Metadata**: Get the metadata of the asset (e.g. width, height, file name, etc.) without requesting the actual file (coded when bundling).
+- **Metadata**: Get the metadata of the asset (e.g. file name, file length, image width, height, etc.) without requesting the actual file *(these data are written into the code when bundling)*.
 
 - **Universal**: Use the dist in most bundlers or frameworks (listed below).
 
@@ -46,7 +46,7 @@
 
 - **Tree-Shaking**: You can add assets as much as you want, and the consumer will only keep what they need.
 
-- **Online CDN**: you can optionally create a signle site specially for resources, throw away the resources when bundling your application, and always fetch the resources from your CDN site when running the application.
+- **Online CDN**: you can optionally create a single site specially for assets, throw away the resources when bundling your application, and always fetch the resources from your CDN site when running the application.
 
 Supported **Library Bundlers** to make the library with Assestant: Rollup, ... (more coming soon)
 
@@ -61,6 +61,8 @@ You may not always need Assestant when building your NPM package.
 If you are building a website, or a web application, you may not need Assestant. You can use the bundler's built-in asset handling feature to include assets in your project. Only use Assestant when you are building a package that will be used by others.
 
 If you are using CommonJS, instead of ESM, you may not need Assestant. Assestant is designed for ESM, and it may not work well, or even necessary, in CommonJS.
+
+Additionally, Assestant has a certain amount of limitation, if your library or consumers are unable to meet these requirements, I guess you have to give up Assestant *(or you can help us to break the limitations if possible)*.
 
 ## 🏍️ Motivation
 

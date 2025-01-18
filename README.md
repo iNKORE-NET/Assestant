@@ -135,3 +135,11 @@ There are also a few limitations for comsumers who uses libraries made with Asse
 - **Tree-shaking**: The build tool of the final website is better to support tree-shaking, libraries made with Assestant usually includes all the assets anyone may need, but the final dist of your website should only contain the assets you really used.
 
 - **Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. It doesn't matter what type the imported ASSE variable is *(mostly Assestant runtime will handle this correctly, but if you are using a build tool that doesn't work with Assestant, please submit an issue and we'll add support)*, but your build tool must support this pattern to use libraries made with Assestant.
+
+## 🙏🏻 Contribution
+
+Assestant needs your help to adapt more bundlers and build tools.
+
+- If you are using a bunder or build tool that is not supported by Assestant, please tell us right away by submitting an issue, and we will add its support as soon as possible! Our goal is to make Assestant work with every bundler.
+
+- PRs are always welcomed!

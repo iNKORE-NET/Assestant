@@ -63,5 +63,9 @@
         "url": "https://github.com/iNKORE-NET/Assestant"
     },
     "homepage": "https://docs.inkore.net/assestant",
-    "bugs": "https://github.com/iNKORE-NET/Assestant/issues"
+    "bugs": "https://github.com/iNKORE-NET/Assestant/issues",
+    "publishConfig": 
+    {
+        "access": "public"
+    }
 }

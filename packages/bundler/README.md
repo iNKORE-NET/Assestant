@@ -6,4 +6,4 @@ Under early development, bugs may appear.
 
 Check [the repository](https://github.com/iNKORE-NET/Assestant) for usage and more information:
 
-This package is the **RUNTIME** part of the `Assestant` project.
+This package is the **BUNDLER** part of the `Assestant` project.

@@ -21,9 +21,6 @@
             "default": "./dist/internal/index.js"
         }
     },
-    "keywords": 
-    [
-    ],
     "devDependencies": 
     {
     },
@@ -39,5 +36,30 @@
     "publishConfig": 
     {
         "access": "public"
-    }
+    },
+    "files": 
+    [
+        "dist",
+        "LICENSE",
+        "README.md"
+    ],
+    "keywords": 
+    [
+        "bundler",
+        "rollup",
+        "webpack",
+        "vite",
+        "esbuild",
+        "assets",
+        "images",
+        "fonts",
+        "css",
+        "scss",
+        "sass",
+        "less",
+        "asset",
+        "assets",
+        "assestant",
+        "website"
+    ]
 }

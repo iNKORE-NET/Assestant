@@ -18,9 +18,8 @@ const config =
     input: ["source/index.ts", ...glob.sync("source/bundlers/*/index.ts"), ...glob.sync("source/declares/*.ts")],
     output:
     {
-        dir: "dist",
-        format: "esm",
-        sourcemap: true,
+        dir: "dist", format: "esm",
+        sourcemap: !isProd,
         preserveModules: true,
         preserveModulesRoot: "source",
     },

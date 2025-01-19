@@ -17,9 +17,8 @@ const config =
     input: ["source/index.ts", "source/internal/index.ts"],
     output:
     {
-        dir: "dist",
-        format: "esm",
-        sourcemap: true,
+        dir: "dist", format: "esm",
+        sourcemap: !isProd,
         preserveModules: true,
         preserveModulesRoot: "source",
     },

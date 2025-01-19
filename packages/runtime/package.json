@@ -1,7 +1,8 @@
 {
     "name": "@assestant/runtime",
-    "version": "1.0.0",
-    "description": "",
+    "version": "0.0.1",
+    "description": "Runtime package for Assestant - Include assets in your NPM package with your favorite build tool!",
+    "type": "module",
     "scripts": 
     {
         "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",

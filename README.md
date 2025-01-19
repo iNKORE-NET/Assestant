@@ -4,7 +4,7 @@
   </a>
 </p>
 
-<p align="center">Include assets in your NPM package with your favorite bundler!</p>
+<p align="center">Include assets in your NPM package with your favorite build tool!</p>
 
 <h1 align="center">
   Assestant

@@ -29,7 +29,8 @@
     "repository": 
     {
         "type": "git",
-        "url": "https://github.com/iNKORE-NET/Assestant"
+        "url": "https://github.com/iNKORE-NET/Assestant",
+        "directory": "packages/runtime"
     },
     "homepage": "https://docs.inkore.net/assestant",
     "bugs": "https://github.com/iNKORE-NET/Assestant/issues",

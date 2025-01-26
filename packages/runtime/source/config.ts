@@ -3,7 +3,7 @@ import type { ResolvableValue } from "./utilities";
 
 declare global
 {
-    interface Window
+    interface AssestantConfigContainer
     {
         /**
          * The global configuration for Assestant. Do not set this property directly.
@@ -11,14 +11,16 @@ declare global
          * @example
          * ```typescript
          * // DO NOT:
-         * ❎ window.assestantConfig = { ... };
-         * ❎ window.assestantConfig.packages = { ... };
+         * ❎ globalThis.assestantConfig = { ... };
+         * ❎ globalThis.assestantConfig.packages = { ... };
          * // DO:
-         * ✅ window.assestantConfig.packages["my-package"] = { ... };
+         * ✅ globalThis.assestantConfig.packages["my-package"] = { ... };
          * ```
          */
         assestantConfig?: AssestantConfig;
     }
+
+    interface globalThis extends AssestantConfigContainer { }
 }
 
 /**
@@ -62,10 +64,10 @@ export type AssestantConfig =
      * @example
      * ```typescript
      * // DO NOT:
-     * ❎ window.assestantConfig = { ... };
-     * ❎ window.assestantConfig.packages = { ... };
+     * ❎ globalThis.assestantConfig = { ... };
+     * ❎ globalThis.assestantConfig.packages = { ... };
      * // DO:
-     * ✅ window.assestantConfig.packages["my-package"] = { ... };
+     * ✅ globalThis.assestantConfig.packages["my-package"] = { ... };
      */
     packages: Record<string, Partial<AssestantPackageConfig>> & { "default": AssestantPackageConfig };
 
@@ -78,16 +80,27 @@ export type AssestantConfig =
 
 export function getAssestantConfig(): AssestantConfig
 {
-    if (!window.assestantConfig)
+    if (!globalThis.assestantConfig)
     {
-        window.assestantConfig = 
+        globalThis.assestantConfig = 
         {
             packages: { "default": { onlineUrl: undefined, assetSource: "auto" } },
-            isOnline: () => (navigator?.onLine ?? true)
+            isOnline: () => 
+            {
+                try
+                {
+                    if (typeof window === "undefined" || !window.navigator) return true;
+                    return navigator.onLine;
+                }
+                catch(ex)
+                {
+                    console.warn("Failed to determine network status. Defaulting to online.", ex);
+                }
+            }
         };
     }
 
-    return window.assestantConfig;
+    return globalThis.assestantConfig;
 }
 
 export function configureAssestant(config: Partial<AssestantConfig>)

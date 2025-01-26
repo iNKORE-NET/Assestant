@@ -5,8 +5,8 @@
     "type": "module",
     "scripts": 
     {
-        "dev": "rollup --config rollup.config.mjs --configPlugin typescript --watch --environment MODE:dev",
-        "build": "rollup -c rollup.config.mjs --configPlugin typescript --environment MODE:prod"
+        "dev": "rollup --config rollup.config.mjs --watch --environment MODE:dev",
+        "build": "rollup -c rollup.config.mjs --environment MODE:prod"
     },
     "exports": 
     {

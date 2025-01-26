@@ -15,7 +15,7 @@ function peelLocalImport(imported: any): string
         return imported;
     }
     
-    for (const prop in ["src", "source", "href", "url", "default"])
+    for (const prop of ["src", "source", "href", "url", "default"])
     {
         if (typeof imported[prop] === "string")
         {

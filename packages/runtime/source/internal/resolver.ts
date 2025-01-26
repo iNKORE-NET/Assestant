@@ -5,7 +5,28 @@ import type { AssetItem, AssetItemConstruction } from "../item";
  */
 export function resolveAsset<TItem extends AssetItem>(constructor: new(construction: any) => TItem, construction: ResolveAssetConstruction): TItem
 {
-    return new constructor(construction);
+    return new constructor({ ...construction, srcLocal: peelLocalImport(construction.srcLocal) });
 }
 
-export type ResolveAssetConstruction = Record<string, any> & AssetItemConstruction;
+function peelLocalImport(imported: any): string
+{
+    if (typeof imported === "string")
+    {
+        return imported;
+    }
+    
+    for (const prop in ["src", "source", "href", "url", "default"])
+    {
+        if (typeof imported[prop] === "string")
+        {
+            return imported[prop];
+        }
+    }
+
+    throw new Error("Could not peel local import. Please check if the build tool you are using is supported by the current version of Assestant.");
+}
+
+export type ResolveAssetConstruction = Record<string, any> & Omit<AssetItemConstruction, "srcLocal"> &
+{
+    srcLocal: any;
+}

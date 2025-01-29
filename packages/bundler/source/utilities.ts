@@ -1,4 +1,4 @@
-import { posix as path } from "path";
+import path from "path";
 import fs from "fs";
 
 import type { PackageJson } from "type-fest";
@@ -29,7 +29,7 @@ export type PartialPartial<T, K extends keyof T> = Partial<Pick<T, K>> & Omit<T,
 export function getPackageInfo(dirname?: string): Partial<PackageJson>
 {
     let dir = dirname ?? path.resolve(".");
-    while (dir !== "/" && dir)
+    while (dir !== path.sep && dir)
     {
         const packagePath = path.join(dir, "package.json");
         if (fs.existsSync(packagePath) && fs.statSync(packagePath).isFile())
@@ -61,4 +61,9 @@ export type Many<T> = T | T[];
 export function isNotStrictEqual(a: string, b: string)
 {
     return a.toLowerCase().trim() == b.toLowerCase().trim();
+}
+
+export function toPosix(p: string)
+{
+    return p.replaceAll(path.win32.sep, path.posix.sep);
 }

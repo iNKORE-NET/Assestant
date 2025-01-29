@@ -1,6 +1,6 @@
 {
     "name": "@assestant/bundler",
-    "version": "0.0.1",
+    "version": "0.0.2-alpha0",
     "description": "Bundler package for Assestant - Include assets in your NPM package with your favorite build tool!",
     "type": "module",
     "scripts": 

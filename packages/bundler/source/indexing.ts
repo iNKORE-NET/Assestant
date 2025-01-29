@@ -1,9 +1,9 @@
-import { posix as path } from "path";
+import path, { posix } from "path";
 import fs from "fs";
 
 import createAsset from "./construction";
 import { AssetItemTemplateJS, AssetItemTemplateDTS } from "./templates";
-import { toSafeName } from "./utilities";
+import { toPosix, toSafeName } from "./utilities";
 import type { ArrayElement } from "type-fest/source/internal";
 
 
@@ -55,18 +55,18 @@ export async function createIndex({ srcFullPath, indexFullPath, publicRoot, outp
         const script = scripts[file];
 
         if (!script) return undefined;
-        return `import ${JSON.stringify(path.relative(indexDirname, path.join(dirname, script)))};`;
+        return `import ${JSON.stringify(toPosix(path.relative(indexDirname, path.join(dirname, script))))};`;
 
     }).filter(v => typeof v === "string").join("\n");
     
     function fillValues(input: string)
     {
         let content = input;
-        content = content.replaceAll("__SRC_LOCAL__", path.relative(indexDirname, srcFullPath)
+        content = content.replaceAll("__SRC_LOCAL__", toPosix(path.relative(indexDirname, srcFullPath))
             .replaceAll("\\", "/"));
 
         content = content.replaceAll("__ASSET_CONSTRUCTOR__", dt.constuctor);
-        content = content.replaceAll("__ASSET_NAME__", toSafeName(path.basename(srcFullPath).replace(/\.[^/.]+$/, "")));
+        content = content.replaceAll("__ASSET_NAME__", toSafeName(toPosix(path.basename(srcFullPath).replace(/\.[^/.]+$/, ""))));
         content = content.replaceAll("__OTHER_CONSTRUCTIONS__", construction);
 
         if (importPreloads)

@@ -1,7 +1,7 @@
 
 import type { Plugin as RollupPlugin } from "rollup";
 
-import { posix as path } from "path";
+import path from "path";
 import fs from "fs";
 import { createFilter } from "@rollup/pluginutils";
 import { createIndex, type CreateIndexOptions } from "source/indexing";

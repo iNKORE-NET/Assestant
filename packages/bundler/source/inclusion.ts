@@ -1,6 +1,6 @@
 import { glob } from "glob";
-import { posix as path } from "path";
-import { invalidAssetExtensions } from "./utilities";
+import path from "path";
+import { invalidAssetExtensions, toPosix } from "./utilities";
 
 export type InclusionFilter = Selector &
 {
@@ -33,17 +33,17 @@ export function listFilesBySelector(dirname: string, selector: Selector): string
     if ("extensions" in selector)
     {
         // ExtensionSelector
-        return glob.sync(path.join(dirname, "**/*"), { nodir: true }).filter((f) => selector.extensions.some((ext) => f.toLowerCase().endsWith(ext.toLowerCase())));
+        return glob.sync(toPosix(path.join(dirname, "**/*")), { nodir: true }).filter((f) => selector.extensions.some((ext) => f.toLowerCase().endsWith(ext.toLowerCase())));
     }
     else if ("pattern" in selector)
     {
         // GlobSelector
-        return glob.sync(path.join(dirname, selector.pattern), { nodir: true });
+        return glob.sync(toPosix(path.join(dirname, selector.pattern)), { nodir: true });
     }
     else 
     {
         // EverythingSelector
-        return glob.sync(path.join(dirname, "**/*"), { nodir: true });
+        return glob.sync(toPosix(path.join(dirname, "**/*")), { nodir: true });
     }
 
     return [];

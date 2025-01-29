@@ -1,7 +1,7 @@
-import { posix as path } from "path";
+import path from "path";
 import type { NormalizedOutputOptions, Plugin as RollupPlugin } from "rollup";
 import type { AssestantOptions } from "source/config";
-import { isNotStrictEqual, type Many } from "source/utilities";
+import { isNotStrictEqual, toPosix, type Many } from "source/utilities";
 
 
 export type ConsumerPluginOptions = 
@@ -77,6 +77,7 @@ export function consumerPlugin(ops: ConsumerPluginOptions): RollupPlugin
                         const chunkPath = path.join(outputRoot, fileName);
 
                         let indexPathRelat = path.relative(path.dirname(chunkPath), indexPath);
+                        indexPathRelat = toPosix(indexPathRelat);
                         if (!indexPathRelat.startsWith(".")) indexPathRelat = "./" + indexPathRelat;
                         chunk.code = chunk.code.replaceAll(importee, indexPathRelat);
                     }

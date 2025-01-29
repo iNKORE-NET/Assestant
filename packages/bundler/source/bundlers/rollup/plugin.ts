@@ -70,8 +70,8 @@ export default function bundlePlugin(ops: AssestantPluginOptionsInput): RollupPl
                     ({ 
                         srcFullPath: id, publicRoot, 
                         indexFullPath: dtsPat,
+                        preloadScripts: assestant.preloadScripts,
                         outputDir, packageName, dirname,
-                        preloadScripts: assestant.preloadScripts
                     }, "dts");
 
                     this.emitFile

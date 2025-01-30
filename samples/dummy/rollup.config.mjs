@@ -42,7 +42,9 @@ const config =
             }),
 
             consumerPlugin({ assestant })
-        ]
+        ],
+
+        external: ["node_modules"]
     },
 
     bundleAssestant({ assestant })

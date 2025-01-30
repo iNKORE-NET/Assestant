@@ -53,9 +53,10 @@ export class AssetItem
     get srcOnline() 
     { 
         if (this.packageConfig.onlineUrl == undefined) throw new Error("The onlineUrlBase must be set in the assestantConfig in order to fetch assets from online.");
-        if (typeof this.packageConfig.onlineUrl === "function") return this.packageConfig.onlineUrl(this);
+        const path = removeSlash(this.relativePath ?? "", { leading: true });
+        if (typeof this.packageConfig.onlineUrl === "function") return this.packageConfig.onlineUrl(path, this);
 
-        return removeSlash(this.packageConfig.onlineUrl.base, { trailing: true }) + "/" + removeSlash(this.relativePath ?? "", { leading: true });
+        return removeSlash(this.packageConfig.onlineUrl.base, { trailing: true }) + "/" + path;
     }
 
     /**
@@ -66,12 +67,12 @@ export class AssetItem
     { 
         let method: AssetSource = resolveValue(this.packageConfig.assetSource, [this]);
         const assestantConfig = getAssestantConfig();
-        
+
         switch (method)
         {
             case "local": return this.srcLocal;
             case "online": return this.srcOnline;
-            case "auto": return ((typeof assestantConfig.isOnline === "function" ? assestantConfig.isOnline() : assestantConfig.isOnline) && this.packageConfig.onlineUrl != undefined)
+            case "auto": return ((typeof assestantConfig.isOnline === "function" ? assestantConfig.isOnline(this) : assestantConfig.isOnline) && this.packageConfig.onlineUrl != undefined)
                 ? this.srcOnline : this.srcLocal;
         }
     }
@@ -81,8 +82,7 @@ export class AssetItem
      */
     protected get packageConfig() 
     { 
-        const assestantConfig = getAssestantConfig();
-        return { ...assestantConfig.packages["default"], ...assestantConfig.packages[this.package] }; 
+        return getAssestantConfig(this.package);
     }
 
     /** Returns the `src` property. */

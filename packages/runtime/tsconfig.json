@@ -32,5 +32,9 @@
     "include":
     [
         "source/**/*",
+    ],
+    "files":
+    [
+        "source/index.d.ts"
     ]
 }

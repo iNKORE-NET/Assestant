@@ -33,7 +33,6 @@
 
 <br>
 
-
 ## ✨ Features
 
 - **Automatic**: Automatically bundle assets into your NPM package, no more making one file for each single asset file.
@@ -134,7 +133,7 @@ There are also a few limitations for comsumers who uses libraries made with Asse
 
 - **Tree-shaking**: The build tool of the final website is better to support tree-shaking, libraries made with Assestant usually includes all the assets anyone may need, but the final dist of your website should only contain the assets you really used.
 
-- **Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. It doesn't matter what type the imported ASSE variable is *(mostly Assestant runtime will handle this correctly, but if you are using a build tool that doesn't work with Assestant, please submit an issue and we'll add support)*, but your build tool must support this pattern to use libraries made with Assestant.
+- **Asset File Import Statement**: Assestant can only import an asset with a ES import statement like `import ASSE from "../../a.png"`. It doesn't matter what type the imported ASSE variable is *(mostly Assestant runtime will handle this correctly, but if you are using a build tool that doesn't work with Assestant, please submit an issue and we'll add support)*, but your build tool must support this pattern to use libraries made with Assestant.
 
 ## 🙏🏻 Contribution
 

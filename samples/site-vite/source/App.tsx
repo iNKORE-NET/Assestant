@@ -15,6 +15,7 @@ const DOCS_SITE = "https://docs.inkore.net/assestant";
 
 const App: React.FunctionComponent<{ }> = () =>
 {
+    console.log(FONT.src);
     return (
         <Fragment>
             <Global styles=
@@ -33,7 +34,10 @@ const App: React.FunctionComponent<{ }> = () =>
                     '@font-face':
                     {
                         fontFamily: "I Do Not Know",
-                        src: `url("${FONT.src}") format("truetype")`,
+                        src: `url("${FONT.srcLocal}") format("truetype")`,
+                        // When using Online Source, the font will be fetched from the online source, which will cause CORS issues.
+                        // As the example is using github as the online source, it will not work.
+                        // If you want the font to work, you need to host the asset on a server that allows CORS, or use the local source.
                     }
                 }}/>
             <div>
